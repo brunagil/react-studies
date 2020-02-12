@@ -1,36 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
 
-const elemento = <p>Momo linda</p>
+//stateful
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      contador: 0
+    };
+  }
 
-function App() {
-  return (
-    // O retorno da função deve ser apenas 1 só elemento, por isso ele deve estar sempre
-    // envolto em tag div, ou React.Fragment ou só a tag sem nomenclatura
+  adicionaUm = () => {
+    this.setState(prevState => {
+      return {
+        contador: prevState.contador + 1
+      };
+    });
+  };
 
+  subtraiUm = () => {
+    this.setState(prevState => {
+        if(prevState.contador > 0)
+            return {
+              contador: prevState.contador - 1
+            };
+        }
+    );
+  };
 
-    //ELEMENTOS: https://pt-br.reactjs.org/docs/rendering-elements.html
+  reset = () => {
+    this.setState(() => {
+      return {
+        contador: 0
+      };
+    });
+  };
 
-    <React.Fragment>
-      <h1>Count: 0</h1>
-      <Descricao />
-      <button>+1</button>
-      <button>-1</button>
-      <button>reset</button>
-    </React.Fragment>
-    
-  );
-
-  // ANATOMIA DO COMPONENTE: https://pt-br.reactjs.org/docs/components-and-props.html
-  // 1. É uma função, 2. recebe um único parâmetro e 3. recebe um JSX.
-  // Obrigatoriamente é criado com letra maíuscula
-  // props são objetos com diversas propriedades
-  function Descricao(props) {
+  render() {
     return (
-      <div>
-        <h2> Ele conta o tempo</h2>
-      </div>
+      <React.Fragment>
+        <h1>Count: {this.state.contador}</h1>
+        <button onClick={this.adicionaUm}>+1</button>
+        <button onClick={this.subtraiUm}>-1</button>
+        <button onClick={this.reset}>reset</button>
+      </React.Fragment>
     );
   }
 }
